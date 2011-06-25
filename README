@@ -1,0 +1,33 @@
+# React jQuery Plugin
+
+React jQuery is a conditional (form) helper. In its basic form, it will show/hide an element based on compliance with a set of conditions (rules).
+
+React strives to be: 
+
+  1) **Functional** - it does what it says it does
+  2) **Readable** - the naming is deliberately chosen to communicate exactly what it does
+  3) **Adaptable** - creating custom rules or actions is easy
+  
+Example of setting up rules. 
+
+    var IS = $.extend({}, $.fn.reactor.helpers); // don't really need this, but it makes the following lines easier to read
+	  
+    $('.cities')	
+       	.reactIf('#zip', IS.Between(19100, 19400))
+       	.reactIf('#zip', IS.NotBlank);
+       		
+    $('.philly_middle_to_low_income')
+      	.reactIf('#income_2011', IS.LessThan(40000))
+       	.reactIf('#cities_select', IS.EqualTo('philadelphia'));
+       		
+    $('.low_income_select_zips')
+       	.reactIf('#income_2011', IS.LessThan(15000))
+       	.reactIf('#zip', IS.BetweenSameLength(19000, 20000))
+        .reactIf('#zip', IS.NotBlank);
+       		
+    $('.reactor').trigger('change.reactor'); // run all the conditions at the start
+    
+
+Nate Davis Olds, nate@innateservices.com
+Copyright 2011 - Nathan Davis Olds
+Distributed under the MIT license.
