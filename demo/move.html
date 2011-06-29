@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>React.js jquery plugin</title>
+  
+  <link type="text/css" rel="stylesheet" media="all" href="stylesheets/demo.css"></link>  	    
+</head>
+<body>
+ 	<div id="nav"></div>
+
+	<h1>Move example of the reactor jQuery plugin</h1>
+	<p>As you enter in the information, the li elements that qualify will change ul.</p>
+	
+	<form id="portfolio_form">
+    <fieldset>
+        
+        <label>Zip</label>
+        <input id="zip" type="text" value="" /><br />
+        
+        <label>2011 Income</label>
+        <input id="income_2011" name="income[2011]" value="0" />
+       
+    </fieldset>  
+    
+    <h1>Qualified</h1>
+    <ul id="eligable">
+    	<li id="broad_zip">Zip between 19000 and 20000</li>
+    	<li id="less_than_1000">Income less than 10000</li>
+    	<li id="more_than_100000">Income over 100000</li>
+    	<li id="less_than_25000">Income less than 25000</li>
+    	<li id="short_zip">Zip between 19000 and 19500</li>    
+    </ul>
+    
+    <h1>Unqualified</h1>
+    <ul id="ineligable">    
+    </ul>
+    
+    
+</form>
+
+
+  <script type='text/javascript' src='http://code.jquery.com/jquery-1.6.js'></script>
+  <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js'></script>
+  
+  <script type='text/javascript' src='../lib/jquery.react.js'></script>
+
+
+  	<script type='text/javascript'>
+  	//<![CDATA[ 
+	
+	$(function() {
+	
+	   $('#nav').load('demo_list.html');
+	   
+	   $.fn.reactor.defaults.compliant = function() {
+            $(this).appendTo('#eligable');
+            $(this).find(':disabled').attr({disabled: false});
+        };
+        
+        $.fn.reactor.defaults.uncompliant = function() {
+            $(this).appendTo('#ineligable');
+            $(this).find(':enabled').attr({disabled: true});
+        }   
+	
+	   var IS = $.extend({}, $.fn.reactor.helpers);
+	               		
+       $('#broad_zip')
+       	    .reactIf('#zip', 'Between', 19000, 20000)
+       	    .reactIf('#zip', IS.NotBlank);
+       	    
+       $('#short_zip')
+       	    .reactIf('#zip', 'Between', 19000, 19500)
+       	    .reactIf('#zip', IS.NotBlank);
+       	    
+       $('#less_than_1000')
+       	    .reactIf('#income_2011', 'LessThan', 10000);
+       
+       $('#less_than_25000')
+       	    .reactIf('#income_2011', 'LessThan', 25000);
+       	    
+       $('#more_than_100000')
+       	    .reactIf('#income_2011', 'MoreThan', 100000);	    
+       		
+       		
+       $('.reactor').trigger('change.reactor');
+       	
+	});
+
+
+  	//]]> 
+  	</script>
+  
+</body>
+</html>
+
+

@@ -1,0 +1,22 @@
+    fieldset	{
+	        margin:20px;
+	}
+	
+	p {
+	        margin-bottom: 5px;
+	}	
+	
+	.reactor {
+		border: 1px solid transparent;
+	}
+	
+	#nav {
+		position:absolute;
+		top:	0px;
+		right:	0px;
+		width:	300px;
+	}
+	
+	body {
+		padding-right:  310px;
+	}

@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>React.js jquery plugin</title>
+  
+  <link type="text/css" rel="stylesheet" media="all" href="stylesheets/demo.css"></link>  	  
+  
+</head>
+<body>
+
+    <div id="nav"></div>
+	
+	<h1>Opacity example of the reactor jQuery plugin</h1>
+	
+	
+	<form id="portfolio_form">
+	    <fieldset>
+	        
+	        <label>Zip</label>
+	        <input id="zip" type="text" value="" /><br />
+	        
+	        <label>2011 Income</label>
+	        <input id="income_2011" name="income[2011]" />
+	       
+	    </fieldset>  
+	    
+	    <p>Display cities only when zip is between 19100 and 19400</p>
+	   
+	    <fieldset class="cities">
+	        <label>Cities</label>
+	        <select id="cities_select">
+	            <option value=""></option>
+	            <option value="philadelphia">Philadelphia</option>
+	            <option value="media">Media</option>
+	            <option value="doylestown">Doylestown</option>
+	        </select>    
+	    </fieldset>
+	    
+	    <p>Display checkboxes only for Philadelphia and income less than 40000</p>
+	    <fieldset class="philly_middle_to_low_income">
+	        <input type="checkbox" /> Check One<br />
+	        <input type="checkbox" /> Check Two<br />
+	        <input type="checkbox" /> Check Three<br />
+	        <input type="checkbox" /> Check Four<br />
+	    </fieldset>   
+	   
+	   <p>Display checkboxes when zip is between 19000 and 20000 and income is lower than 15000</p>
+	   <fieldset class="low_income_select_zips">
+	        <input type="checkbox" /> Check One<br />
+	        <input type="checkbox" /> Check Two<br />
+	        <input type="checkbox" /> Check Three<br />
+	        <input type="checkbox" /> Check Four<br />
+	    </fieldset>    
+	    
+	</form>
+
+	<script type='text/javascript' src='http://code.jquery.com/jquery-1.6.js'></script>
+    <script type='text/javascript' src='../lib/jquery.react.js'></script>
+
+  	<script type='text/javascript'>
+  	//<![CDATA[ 
+	
+	$(function() {
+	
+	   $('#nav').load('demo_list.html');
+	
+	   $.fn.reactor.defaults.compliant = function() {
+            $(this).animate({opacity: 1});
+            $(this).find(':disabled').attr({disabled: false});
+       };
+        
+       $.fn.reactor.defaults.uncompliant = function() {
+            $(this).animate({opacity: 0.25});
+            $(this).find(':enabled').attr({disabled: true});
+       }   
+	
+	   var IS = $.extend({}, $.fn.reactor.helpers);
+	  
+       $('.cities')	
+       		.reactIf('#zip', 'BetweenSameLength', 19100, 19400);
+       		
+       $('.philly_middle_to_low_income')
+       		.reactIf('#cities_select', 'Enabled')
+       		.reactIf('#cities_select', IS.EqualTo('philadelphia'))
+       		.reactTo('#zip');
+       		
+       $('.low_income_select_zips')
+       		.reactIf('#income_2011', IS.LessThan(15000))
+       		.reactIf('#zip', 'Between', 19000, 20000)
+       		.reactIf('#zip', IS.NotBlank);
+       		
+       $('.reactor').trigger('change.reactor');
+       	
+	});
+
+
+  	//]]> 
+  	</script>
+  
+</body>
+</html>
+
+
