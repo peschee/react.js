@@ -4,24 +4,14 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <title>React.js jquery plugin</title>
-  
-  <script type='text/javascript' src='http://code.jquery.com/jquery-1.6.js'></script>
-  <script type='text/javascript' src='../lib/jquery.react.js'></script>
-  	    
-  <style type='text/css'>
-    fieldset	{
-	        margin:20px;
-	}
-	
-	p {
-	        margin-bottom: 5px;
-	}	
-  </style>
+
+  <link type="text/css" rel="stylesheet" media="all" href="stylesheets/demo.css"></link>  
   
 </head>
 <body>
-
-	<h1>Demo example of the reactor jQuery plugin</h1>
+    <div id="nav"></div>
+    
+	<h1>Standard example of the reactor jQuery plugin</h1>
 	
 	<form id="portfolio_form">
     <fieldset>
@@ -64,25 +54,30 @@
     
 </form>
 
+   <script type='text/javascript' src='http://code.jquery.com/jquery-1.6.js'></script>
+   <script type='text/javascript' src='../lib/jquery.react.js'></script>
+
   	<script type='text/javascript'>
   	//<![CDATA[ 
 	
 	$(function() {
 	
+	   $('#nav').load('demo_list.html');
+	
 	   var IS = $.extend({}, $.fn.reactor.helpers);
 	  
        $('.cities')	
-       		.reactIf('#zip', IS.Between(19100, 19400))
-       		.reactIf('#zip', IS.NotBlank);
+       		.reactIf('#zip', 'Between', 19100, 19400)
+       		.reactIf($('#zip'), IS.NotBlank);
        		
        $('.philly_middle_to_low_income')
-       		.reactIf('#income_2011', IS.LessThan(40000))
-       		.reactIf('#cities_select', IS.EqualTo('philadelphia'));
+       		.reactIf('#income_2011', 'LessThan', 40000)
+       		.reactIf($('#cities_select'), IS.EqualTo('philadelphia'));
        		
        $('.low_income_select_zips')
        		.reactIf('#income_2011', IS.LessThan(15000))
-       		.reactIf('#zip', IS.Between(19000, 20000))
-       		.reactIf('#zip', IS.NotBlank);
+       		.reactIf('#zip', 'Between', 19000, 20000)
+       		.reactIf($('#zip'), IS.NotBlank);
        		
        $('.reactor').trigger('change.reactor');
        	
