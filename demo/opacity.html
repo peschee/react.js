@@ -13,7 +13,7 @@
     <div id="nav"></div>
 	
 	<h1>Opacity example of the reactor jQuery plugin</h1>
-	
+	<p>Elements dim and disable when they don't qualify.</p>
 	
 	<form id="portfolio_form">
 	    <fieldset>
@@ -26,7 +26,7 @@
 	       
 	    </fieldset>  
 	    
-	    <p>Display cities only when zip is between 19100 and 19400</p>
+	    <p>Reveal cities only when zip is between 19100 and 19400</p>
 	   
 	    <fieldset class="cities">
 	        <label>Cities</label>
@@ -38,7 +38,7 @@
 	        </select>    
 	    </fieldset>
 	    
-	    <p>Display checkboxes only for Philadelphia and income less than 40000</p>
+	    <p>Reveal checkboxes only for Philadelphia and income less than 40000</p>
 	    <fieldset class="philly_middle_to_low_income">
 	        <input type="checkbox" /> Check One<br />
 	        <input type="checkbox" /> Check Two<br />
@@ -46,7 +46,7 @@
 	        <input type="checkbox" /> Check Four<br />
 	    </fieldset>   
 	   
-	   <p>Display checkboxes when zip is between 19000 and 20000 and income is lower than 15000</p>
+	   <p>Reveal checkboxes when zip is between 19000 and 20000 and income is lower than 15000</p>
 	   <fieldset class="low_income_select_zips">
 	        <input type="checkbox" /> Check One<br />
 	        <input type="checkbox" /> Check Two<br />
@@ -79,7 +79,8 @@
 	   var IS = $.extend({}, $.fn.reactor.helpers);
 	  
        $('.cities')	
-       		.reactIf('#zip', 'BetweenSameLength', 19100, 19400);
+       		.reactIf('#zip', 'Between', 19100, 19400)
+       		.reactIf('#zip', IS.NotBlank);
        		
        $('.philly_middle_to_low_income')
        		.reactIf('#cities_select', 'Enabled')

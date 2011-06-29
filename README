@@ -12,7 +12,7 @@ React strives to be:
   
 reactIf
 
-sets up an element to watch
+sets up an element to watch with a condition
 
    $reactor.reactIf( element_to_watch, condition_to_test, additional_arguments );
    
@@ -24,7 +24,19 @@ sets up an element to watch
    
     - additional_arguments are passed to helper method when condition_to_test is a string.
 
-DEFAULTS
+    
+reactTo
+
+sets up an element to watch without adding a condition
+
+
+reactor
+initializes an element to be able to react to other elements
+    
+
+
+DEFAULT ACTIONS
+
     compliant
         code run when all conditions pass
         
@@ -34,17 +46,79 @@ DEFAULTS
   		code run when one condition fails
   		
   		default: hides the element
-  		
-  		
+
+
+To change the default reaction overwrite the function. The follow dims and disables the element when not compliant:
+
+		$.fn.reactor.defaults.compliant = function() {
+            $(this).animate({opacity: 1});
+            $(this).find(':disabled').attr({disabled: false});
+       };
+        
+       $.fn.reactor.defaults.uncompliant = function() {
+            $(this).animate({opacity: 0.25});
+            $(this).find(':enabled').attr({disabled: true});
+       }   
+
+
   		
   		  
 HELPERS 
 
+There are a number of condition helper built-in for your use.  You can access these
+directly at $.fn.reactor.helpers
+
+    NotBlank
+    true if not blank
+    
+    Blank
+    true if blank
+    
+    Disabled
+    true if field has been disabled
+    
+    Enabled 
+    true if field is enabled
+    
+    EqualTo(matchStr)
+    true if matchStr and string value match    
+    
+    LessThan(number)
+    true if value is less than the number   
+    
+    MoreThan(number)
+    true if value is more than the number
+    
+    Between(min, max)
+    true if value is between min and max
+    
+    BetweenSameLength(min, max)
+    true if value is between min and max and also if it the digit count matches between the min and max
+    
+You can use a helper in two ways. The first is to reference it directly:
+
+.reactIf('#zip', $.fn.reactor.helpers.Between(19100, 19400))
+
+and the second is to provide the string name of the 
+
+.reactIf('#zip', 'Between', 19100, 19400)    
+    
+
+BEYOND HELPers
+
+	You can use custom helpers too.  Helpers are just functions that return something that can be evaluated true/false.
+	
+		.reactIf('#zip', function() { return this.hasClass('some-class'); } )
+	
+	Or, first add the helper to the helper list then reference it
+	
+		$.fn.reactor.helpers.HasSomeClass = function() { return this.hasClass('some-class'); }
+		$('#el').reactIf('#zip', 'HasSomeClass');
+
       
    
-  
-Example of setting up rules. 
-	
+EXAMPLE RULES
+
 	   var IS = $.extend({}, $.fn.reactor.helpers); // not required just makes it look fun
 	  
        $('.cities')	
